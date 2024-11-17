@@ -26,8 +26,8 @@ for lr in 8e-4 9e-4 1e-3; do
         --seed 42 \
         --data_path ./data/arxiv_mia_train_real.jsonl \
         --epochs 2 \
-        --per_device_train_batch_size 50 \
-        --gradient_accumulation_steps 2 \
+        --per_device_train_batch_size 16 \
+        --gradient_accumulation_steps 8 \
         --lr $lr
 
     python src/generate_acts.py \
