@@ -110,7 +110,8 @@ def main(args: Namespace) -> None:
         lr_scheduler_type="constant",
         dataloader_drop_last=False,
         bf16=False,
-        bf16_full_eval=False,
+        fp16=True,   # Enable FP16 training
+        fp16_full_eval=True,  # Optional: enables FP16 during evaluation
         gradient_checkpointing=True,
         remove_unused_columns=False,
         save_strategy="no",
