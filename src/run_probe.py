@@ -116,14 +116,14 @@ def set_seed(seed: int):
 
 def compute_metrics(prediction, answers, print_result=True):
     fpr, tpr, _ = roc_curve(np.array(answers, dtype=bool), -np.array(prediction))
-    auc = auc(fpr, tpr)
+    auc_score = auc(fpr, tpr)
 
     tpr_5_fpr = tpr[np.where(fpr < 0.05)[0][-1]]
 
     if print_result:
-        print(" AUC %.4f, TPR@5%%FPR of %.4f\n" % (auc, tpr_5_fpr))
+        print(" AUC %.4f, TPR@5%%FPR of %.4f\n" % (auc_score, tpr_5_fpr))
 
-    return fpr, tpr, auc, tpr_5_fpr
+    return fpr, tpr, auc_score, tpr_5_fpr
 
 
 def evaluate(probe, test_acts, test_data):
@@ -135,8 +135,8 @@ def evaluate(probe, test_acts, test_data):
         predictions.append(-scores[i].item())
         labels.append(ex["label"])
 
-    fpr, tpr, auc, tpr_5_fpr = compute_metrics(predictions, labels, print_result=False)
-    return auc
+    fpr, tpr, auc_score, tpr_5_fpr = compute_metrics(predictions, labels, print_result=False)
+    return auc_score
 
 
 if __name__ == "__main__":
