@@ -3,8 +3,10 @@
     "gradient_clipping": "auto",
     "train_batch_size": "auto",
     "train_micro_batch_size_per_gpu": "auto",
-    "bf16": {
-        "enabled": "auto"
+    "fp16": {
+        "enabled": true,
+        "loss_scale": 0,
+        "initial_scale_power": 32
     },
     "zero_optimization": {
         "stage": 3,
