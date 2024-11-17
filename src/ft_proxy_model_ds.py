@@ -64,7 +64,7 @@ def main(args: Namespace) -> None:
 
     # Create Model
     model = AutoModelForCausalLM.from_pretrained(
-        args.model_path, return_dict=True, torch_dtype=torch.bfloat16
+        args.model_path, return_dict=True, torch_dtype=torch.float16
     )
     tokenizer = AutoTokenizer.from_pretrained(args.model_path)
     model.config.use_cache = False
