@@ -33,7 +33,7 @@ for lr in 2.5e-3 3e-3 3.5e-3; do
     python src/generate_acts.py \
         --dataset arxiv_mia_train_real \
         --dataset_path ./data/arxiv_mia_train_real.jsonl \
-        --model_path ./saved_models/$(basename $model_path)
+        --model_path $model_path
 
     python src/run_probe.py \
         --seed 42 \
