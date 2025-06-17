@@ -2,5 +2,4 @@ acts
 saved_models
 *__pycache__
 *.ipynb_checkpoints
-config/wandb_key.txt
 wandb
