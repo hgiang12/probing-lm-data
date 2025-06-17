@@ -116,14 +116,14 @@ def set_seed(seed: int):
 
 def compute_metrics(prediction, answers, print_result=True):
     fpr, tpr, _ = roc_curve(np.array(answers, dtype=bool), -np.array(prediction))
-    auc = auc(fpr, tpr)
+    auc1 = auc(fpr, tpr)
 
     tpr_5_fpr = tpr[np.where(fpr < 0.05)[0][-1]]
 
     if print_result:
-        print(" AUC %.4f, TPR@5%%FPR of %.4f\n" % (auc, tpr_5_fpr))
+        print(" AUC %.4f, TPR@5%%FPR of %.4f\n" % (auc1, tpr_5_fpr))
 
-    return fpr, tpr, auc, tpr_5_fpr
+    return fpr, tpr, auc1, tpr_5_fpr
 
 
 def evaluate(probe, test_acts, test_data):
@@ -135,7 +135,7 @@ def evaluate(probe, test_acts, test_data):
         predictions.append(-scores[i].item())
         labels.append(ex["label"])
 
-    fpr, tpr, auc, tpr_5_fpr = compute_metrics(predictions, labels, print_result=False)
+    fpr, tpr, auc, tpr_5_fpr = compute_metrics(predictions, labels, print_result=True)
     return auc
 
 
@@ -147,8 +147,12 @@ if __name__ == "__main__":
 
     if "TinyLlama-1.1B" in args.target_model:
         layer_num = 22
+    elif "open_llama_3b" in args.target_model:
+        layer_num = 26
     elif "open_llama_13b" in args.target_model:
         layer_num = 40
+    elif "LLaMA-1B-dj-refine-150B" in args.target_model:
+        layer_num = 24
     else:
         raise NotImplementedError
 
@@ -170,6 +174,7 @@ if __name__ == "__main__":
     dev_auc_list = []
     test_auc_list = []
     for layer in range(layer_num):
+        print(f"[INFO] Testing layer {layer}:")
         train_acts, train_labels = train_act_dataset.get(layer)
         probe = LRProbe.from_data(train_acts, train_labels, device=device)
 
@@ -185,3 +190,4 @@ if __name__ == "__main__":
     print(f"average dev auc: {sum(dev_auc_list)/len(dev_auc_list):.4f}\n")
     print(f"MAX dev auc: {max(dev_auc_list):.4f} in layer_{dev_best_layer}")
     print(f"   test auc: {test_auc_list[dev_best_layer]:.4f} in layer_{dev_best_layer}")
+
