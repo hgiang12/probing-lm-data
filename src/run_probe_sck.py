@@ -84,6 +84,7 @@ def get_all_classifiers():
     skip_names = {
         "CategoricalNB",
         "ComplementNB",
+        "DummyClassifier",
         "GaussianProcessClassifier",
         "LabelPropagation",
         "LabelSpreading",
@@ -130,7 +131,8 @@ if __name__ == "__main__":
     test_set = read_jsonl(args.test_set_path)
 
     classifiers = get_all_classifiers()
-
+    print("\nTrying scikit-learn classifiers: ...")
+    
     for clf_name, clf in classifiers:
         print(f"\n========== Trying classifier: {clf_name} ==========")
         dev_auc_list = []
