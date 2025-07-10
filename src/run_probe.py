@@ -149,6 +149,8 @@ if __name__ == "__main__":
         layer_num = 22
     elif "open_llama_3b" in args.target_model:
         layer_num = 26
+    elif "open_llama_7b" in args.target_model:
+        layer_num = 32
     elif "open_llama_13b" in args.target_model:
         layer_num = 40
     elif "LLaMA-1B-dj-refine-150B" in args.target_model:
@@ -190,4 +192,3 @@ if __name__ == "__main__":
     print(f"average dev auc: {sum(dev_auc_list)/len(dev_auc_list):.4f}\n")
     print(f"MAX dev auc: {max(dev_auc_list):.4f} in layer_{dev_best_layer}")
     print(f"   test auc: {test_auc_list[dev_best_layer]:.4f} in layer_{dev_best_layer}")
-
