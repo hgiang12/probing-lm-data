@@ -119,6 +119,8 @@ if __name__ == "__main__":
         layer_num = 22
     elif "open_llama_3b" in args.target_model:
         layer_num = 26
+    elif "open_llama_7b" in args.target_model:
+        layer_num = 32
     elif "open_llama_13b" in args.target_model:
         layer_num = 40
     elif "LLaMA-1B-dj-refine-150B" in args.target_model:
